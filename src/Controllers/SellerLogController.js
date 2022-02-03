@@ -1,14 +1,23 @@
 'use strict';
-const SellerLog = require('../Models/SellerLog');
-exports.findAll = function(req, res) {
-    SellerLog.findAll(function(err, log) {
-        console.log('controller')
-        if (err)
-        res.send(err);
-        console.log('res', log);
-        res.send(log);
-    });
+// const SellerLog = require('../Models/SellerLog');
+const SellerLog = require('../Models/SellerLogModel').SellerLog;
+
+
+// exports.findAll = function(req, res) {
+//     SellerLog.findAll(function(err, log) {
+//         console.log('controller')
+//         if (err)
+//         res.send(err);
+//         console.log('res', log);
+//         res.send(log);
+//     });
+// };
+exports.findAll = function (req, res) {
+    return SellerLog
+      .then((SellerLog) => res.status(200).send(SellerLog))
+      .catch((error) => { res.status(400).send(error); });
 };
+
 exports.create = function(req, res) {
 const new_log= new SellerLog(req.body);
 //handles null error
