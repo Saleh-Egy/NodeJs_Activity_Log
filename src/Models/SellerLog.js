@@ -1,74 +1,33 @@
 'use strict';
-var dbConn = require('../../config/db.config');
-//SellerLog object create
-var SellerLog = function(sellerLog){
-  this.method     = sellerLog.method;
-  this.url      = sellerLog.url;
-  this.body          = sellerLog.body;
-  this.user_id          = sellerLog.user_id;
-  this.created_at     = new Date();
-  this.updated_at     = new Date();
-};
+const SellerLogTable = require('../Migrations/create_seller_logs_table');
+var SellerLog = {
+    findAll: findAll,
+    create: create,
+    findById: findById,
+    deleteById: deleteById,
+    update: update
+}
 
-SellerLog.create = function (newLog, result) {
-  dbConn.query("INSERT INTO seller_logs set ?", newLog, function (err, res) {
-    if(err) {
-      console.log("error: ", err);
-      result(err, null);
-    }
-    else{
-      console.log(res.insertId);
-      result(null, res.insertId);
-    }
-  });
-};
+function findAll() {
+    return SellerLogTable.findAll();
+}
 
-SellerLog.findById = function (id, result) {
-  dbConn.query("Select * from seller_logs where id = ? ", id, function (err, res) {
-    if(err) {
-      console.log("error: ", err);
-      result(err, null);
-    }
-    else{
-      result(null, res);
-    }
-  });
-};
+function findById(id) {
+    return SellerLogTable.findByPk(id);
+}
 
-SellerLog.findAll = function (result) {
-  dbConn.query("Select * from seller_logs", function (err, res) {
-    if(err) {
-      console.log("error: ", err);
-      result(null, err);
-    }
-    else{
-      console.log('seller_logs : ', res);
-      result(null, res);
-    }
-  });
-};
 
-SellerLog.update = function(id, sellerLog, result){
-  dbConn.query("UPDATE seller_logs SET method=?,url=?,body=?,user_id=? WHERE id = ?", 
-  [sellerLog.method,sellerLog.url,sellerLog.body,sellerLog.user_id, id], function (err, res) {
-    if(err) {
-      console.log("error: ", err);
-      result(null, err);
-    }else{
-      result(null, res);
-    }
-  });
-};
+function create(request) {
+    var record = new SellerLogTable(request);
+    return record.save();
+}
 
-SellerLog.delete = function(id, result){
-  dbConn.query("DELETE FROM seller_logs WHERE id = ?", [id], function (err, res) {
-    if(err) {
-      console.log("error: ", err);
-      result(null, err);
-    }
-    else{
-      result(null, res);
-    }
-  });
-};
-module.exports= SellerLog;
+function deleteById(id) {
+    return SellerLogTable.destroy({ where: { id: id } });
+}
+
+
+function update(request, id) {
+    return SellerLogTable.update(request, { where: { id: id } });
+}
+module.exports = SellerLog;

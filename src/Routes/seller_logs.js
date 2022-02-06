@@ -10,5 +10,5 @@ router.get('/:id', SellerLogController.findById);
 // Update a Logs with id
 router.put('/:id', SellerLogController.update);
 // Delete a Logs with id
-router.delete('/:id', SellerLogController.delete);
+router.delete('/:id', SellerLogController.deleteById);
 module.exports = router
