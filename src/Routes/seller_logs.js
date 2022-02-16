@@ -6,9 +6,5 @@ router.get('/', SellerLogController.findAll);
 // Create a new Logs
 router.post('/', SellerLogController.create);
 // Retrieve a single Logs with id
-router.get('/:id', SellerLogController.findById);
-// Update a Logs with id
-router.put('/:id', SellerLogController.update);
-// Delete a Logs with id
-router.delete('/:id', SellerLogController.deleteById);
+router.get('/:userId', SellerLogController.findById);
 module.exports = router

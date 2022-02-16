@@ -1,18 +1,14 @@
 'use strict';
-const Sequelize = require('sequelize');
+const mongoose = require('mongoose');
+require('dotenv').config();
 
-// const dbConn = new Sequelize(`postgres://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:5432/${process.env.DB_DATABASE}`)
-
-const dbConn = new Sequelize(process.env.DB_DATABASE, process.env.DB_USERNAME, process.env.DB_PASSWORD,{
-  host     : process.env.DB_HOST,
-  dialect: 'postgres',
-});
-dbConn
-  .authenticate()
-  .then(() => {
-    console.log('Connection has been established successfully.');
-  })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err);
+var dbConn = mongoose.connect(process.env.DATABASE_URL, {
+useNewUrlParser: true
+  }).then(() => {
+    console.log("Successfully connected to the database");    
+  }).catch(err => {
+    console.log('Could not connect to the database. Exiting now...', err);
+    process.exit();
   });
+ 
 module.exports = dbConn;

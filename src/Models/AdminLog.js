@@ -1,7 +1,7 @@
 'use strict';
 const mongoose = require('mongoose');
 
-const SellerLogSchema = new mongoose.Schema({
+const AdminLogSchema = new mongoose.Schema({
     method: String,
     serviceId:Number,
     url: String,
@@ -14,4 +14,4 @@ const SellerLogSchema = new mongoose.Schema({
     timestamps: true
 });
 
-module.exports = mongoose.model('SellerLog', SellerLogSchema);
+module.exports = mongoose.model('AdminLog', AdminLogSchema);

@@ -1,7 +1,7 @@
 'use strict';
-const SellerLog = require('../Models/SellerLog');
+const AdminLog = require('../Models/AdminLog');
 
-var SellerLogController = {
+var AdminLogController = {
     create: create,
     findAll: findAll,
     findById: findById,
@@ -13,7 +13,7 @@ var SellerLogController = {
  * @param {*} res 
  */
 function findAll(req, res) {
-    SellerLog.find().
+    AdminLog.find().
         then((data) => {
             res.send(data);
         })
@@ -28,7 +28,7 @@ function findAll(req, res) {
  * @param {*} res 
  */
 function findById(req, res) {
-    SellerLog.find().
+    AdminLog.find().
     then((data) => {
         res.send(data.filter(element => {
             if(element.userId == req.params.userId){
@@ -39,6 +39,7 @@ function findById(req, res) {
     .catch((error) => {
         console.log(error);
     });
+        
 }
 
 /**
@@ -47,7 +48,7 @@ function findById(req, res) {
  * @param {*} res 
  */
 function create(req, res) {
-    const log = new SellerLog(req.body);
+    const log = new AdminLog(req.body);
     log.save()
     .then((data) => {
         res.send(data);
@@ -58,4 +59,4 @@ function create(req, res) {
     });
 }
 
-module.exports = SellerLogController;
+module.exports = AdminLogController;
